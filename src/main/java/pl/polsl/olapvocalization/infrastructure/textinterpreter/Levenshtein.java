@@ -1,4 +1,4 @@
-package pl.polsl.olapvocalization.textinterpretation;
+package pl.polsl.olapvocalization.infrastructure.textinterpreter;
 
 import java.util.Arrays;
 

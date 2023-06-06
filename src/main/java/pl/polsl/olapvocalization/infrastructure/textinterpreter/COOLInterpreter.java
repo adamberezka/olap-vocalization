@@ -1,8 +1,8 @@
-package pl.polsl.olapvocalization.textinterpretation;
+package pl.polsl.olapvocalization.infrastructure.textinterpreter;
 
-import java.util.Arrays;
+import java.util.List;
 
-public class TextInterpreter {
+public class COOLInterpreter implements TextInterpreter {
 
     public static String[] tokenizeText(String text){
         return text.split(" ");
@@ -14,9 +14,13 @@ public class TextInterpreter {
 
     public static float simPhrases(String[] t, String[] w){
 
-
+        // TODO
 
         return 0;
     }
 
+    @Override
+    public List<String> getInterpretedText() {
+        return null;
+    }
 }
