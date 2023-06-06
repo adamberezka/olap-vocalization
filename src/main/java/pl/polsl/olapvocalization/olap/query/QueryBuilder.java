@@ -8,11 +8,11 @@ public class QueryBuilder {
 
     private final TextInterpreter textInterpreter;
 
-    public Query getInitialQuery() {
+    public Query getInitialQuery(final String queryInput) {
         return null;
     }
 
-    public QueryRefinement getQueryRefinement() {
+    public QueryRefinement getQueryRefinement(final String queryInput) {
         return null;
     }
 }

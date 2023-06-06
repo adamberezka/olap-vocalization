@@ -1,11 +1,12 @@
 package pl.polsl.olapvocalization.infrastructure.database;
 
 import pl.polsl.olapvocalization.olap.query.Query;
+import pl.polsl.olapvocalization.olap.query.QueryResult;
 
 import java.util.List;
 
 public interface QueryExecutor {
 
-    List<OLAPRecord> executeQuery(Query query);
+    QueryResult executeQuery(Query query);
 
 }
