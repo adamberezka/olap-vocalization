@@ -2,7 +2,6 @@ package pl.polsl.olapvocalization.infrastructure;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.polsl.olapvocalization.infrastructure.database.OLAPRecord;
 import pl.polsl.olapvocalization.infrastructure.database.QueryExecutor;
 import pl.polsl.olapvocalization.infrastructure.input.InputManager;
 import pl.polsl.olapvocalization.infrastructure.insight.Insight;
@@ -30,30 +29,16 @@ public class VOOLProcessor {
     private final InsightGenerator insightGenerator;
     private final InsightVocalizator insightVocalizator;
 
-    private QueryState queryState = QueryState.INITIAL;
-
     public void run() {
-        while (true) {
+
+        while (true) { // TODO add exit
 
             final String input = inputManager.getInput();
+            final Query query = queryBuilder.getQuery(input);
 
-            final QueryValidationResult queryValidationResult;
+            final QueryValidationResult queryValidationResult = queryValidator.validateQuery(userSession.getCurrentQuery(), query);
 
-            if (queryState == QueryState.INITIAL) {
-                final Query initialQuery = queryBuilder.getInitialQuery(input);
-                queryValidationResult = queryValidator.validateQuery(initialQuery);
-                if (queryValidationResult.getSuccess())
-                    userSession.setInitialQuery(initialQuery);
-                queryState = QueryState.REFINEMENT;
-            } else {
-                final QueryRefinement queryRefinement = queryBuilder.getQueryRefinement(input);
-                final Query updatedQuery = userSession.getCurrentQuery().updateQuery(queryRefinement);
-                queryValidationResult = queryValidator.validateQuery(updatedQuery);
-                if (queryValidationResult.getSuccess())
-                    userSession.addRefinement(queryRefinement);
-            }
-
-            if(queryValidationResult.getSuccess()) {
+            if (queryValidationResult.getSuccess()) {
                 final QueryResult queryResult = queryExecutor.executeQuery(userSession.getCurrentQuery());
                 userSession.updateResult(queryResult);
                 final List<Insight> insights = insightGenerator.generateInsights(userSession.getPreviousResult(), userSession.getCurrentResult());
@@ -65,10 +50,5 @@ public class VOOLProcessor {
         }
     }
 
-
-    enum QueryState {
-        INITIAL,
-        REFINEMENT
-    }
 
 }

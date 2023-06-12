@@ -1,6 +1,14 @@
 package pl.polsl.olapvocalization.olap.query;
 
-public class QueryRefinement {
+public class QueryRefinement implements Query {
+
+    private RefinementType type;
+
+    @Override
+    public boolean isInitial() {
+        return false;
+    }
+
     enum RefinementType {
         DRILL,
         ROLLUP,
@@ -8,8 +16,7 @@ public class QueryRefinement {
         ADD,
         DROP,
         REPLACE,
-    }
 
-    private RefinementType type;
+    }
 
 }

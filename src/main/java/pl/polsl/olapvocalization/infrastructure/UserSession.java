@@ -1,6 +1,7 @@
 package pl.polsl.olapvocalization.infrastructure;
 
 import lombok.Getter;
+import pl.polsl.olapvocalization.olap.query.InitialQuery;
 import pl.polsl.olapvocalization.olap.query.Query;
 import pl.polsl.olapvocalization.olap.query.QueryRefinement;
 import pl.polsl.olapvocalization.olap.query.QueryResult;
@@ -11,19 +12,27 @@ import java.util.List;
 @Getter
 public class UserSession {
 
-    private Query initialQuery;
-    private Query currentQuery;
+    private InitialQuery initialQuery;
+    private InitialQuery currentQuery;
     private final List<QueryRefinement> refinementHistory = new ArrayList<>();
 
     private QueryResult previousResult;
     private QueryResult currentResult;
 
 
-    public void setInitialQuery(Query query) {
+    public void updateSession(final Query query) {
+        if (query.isInitial()) {
+            setInitialQuery((InitialQuery) query);
+        } else {
+            addRefinement((QueryRefinement) query);
+        }
+    }
+
+    private void setInitialQuery(final InitialQuery query) {
         initialQuery = query;
     }
 
-    public void addRefinement(QueryRefinement refinement) {
+    private void addRefinement(final QueryRefinement refinement) {
         refinementHistory.add(refinement);
     }
 
