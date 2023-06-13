@@ -8,4 +8,5 @@ import java.util.List;
 public class CubeDimensionMetadata {
     String name;
     List<CubeDimensionHierarchyMetadata> hierarchies;
+    List<AttributeMetadata> attributes;
 }

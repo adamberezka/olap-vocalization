@@ -2,8 +2,11 @@ package pl.polsl.olapvocalization.infrastructure.database.metadata;
 
 import lombok.Value;
 
+import java.util.List;
+
 @Value
 public class CubeDimensionHierarchyMetadata {
     String name;
-    CubeDimensionHierarchyLevelMetadata topHierarchyLevel;
+    List<CubeDimensionHierarchyLevelMetadata> topHierarchyLevels;
+    List<AttributeMetadata> attributes;
 }

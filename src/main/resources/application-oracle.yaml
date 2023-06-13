@@ -1,0 +1,18 @@
+olap:
+  vocalization:
+    input-manager: console
+    text-interpreter: simple
+    query-validator: simple
+    query-executor: oracle
+    insight-vocalizator: logging
+    insight-vocalization-cost-calculator: words_count
+    insight-generator-modules:
+      - test
+
+    datasource:
+      oracle:
+        host-address: localhost
+        username: Global
+        password: root
+        database-name: olapPDB
+        database-schema-name: GLOBAL

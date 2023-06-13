@@ -7,5 +7,6 @@ import java.util.List;
 @Value
 public class CubeDimensionHierarchyLevelMetadata {
     String name;
-    List<CubeDimensionHierarchyLevelMetadata> childLevels;
+    Integer depth;
+    List<AttributeMetadata> attributes;
 }
