@@ -1,22 +1,26 @@
 package pl.polsl.olapvocalization.infrastructure.database.query;
 
+import lombok.Data;
+
+import java.util.List;
+
+@Data
 public class QueryRefinement implements Query {
-
-    private RefinementType type;
-
+    public enum RefinementType {
+        DRILL,
+        ROLLUP,
+        SLICE,
+        ADD,
+        DROP,
+        REPLACE,
+    }
     @Override
     public boolean isInitial() {
         return false;
     }
 
-    enum RefinementType {
-        DRILL,
-        ROLLUP,
-        SAD,
-        ADD,
-        DROP,
-        REPLACE,
+    private RefinementType type;
 
-    }
-
+    private List<String> oldClause;
+    private List<String> newClause;
 }

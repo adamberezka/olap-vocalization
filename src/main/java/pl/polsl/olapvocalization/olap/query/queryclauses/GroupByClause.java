@@ -10,4 +10,8 @@ public class GroupByClause implements QueryClause {
 
     private List<String> attributes;
 
+    public void addGroupByAttribute(String attribute){
+        this.attributes.add(attribute);
+    }
+
 }

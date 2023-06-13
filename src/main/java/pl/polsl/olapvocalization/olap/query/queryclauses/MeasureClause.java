@@ -10,5 +10,14 @@ public class MeasureClause implements QueryClause {
         return null;
     }
 
+    private enum MeasureClauseType {
+        AGGREGATE,
+        COUNT
+    }
+
     private List<Pair<String, String>> values;
+
+    public void addMeasureClausePair(String value1, String value2){
+        this.values.add(new Pair<>(value1, value2));
+    }
 }

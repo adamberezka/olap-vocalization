@@ -10,4 +10,8 @@ public class SelectionClause implements QueryClause {
 
     private List<SCN> scnList;
 
+    public void addSCN(SCN scn){
+        this.scnList.add(scn);
+    }
+
 }
