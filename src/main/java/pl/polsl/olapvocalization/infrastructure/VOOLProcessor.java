@@ -3,16 +3,16 @@ package pl.polsl.olapvocalization.infrastructure;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.polsl.olapvocalization.infrastructure.database.QueryExecutor;
+import pl.polsl.olapvocalization.infrastructure.database.UserSession;
 import pl.polsl.olapvocalization.infrastructure.input.InputManager;
 import pl.polsl.olapvocalization.infrastructure.insight.Insight;
 import pl.polsl.olapvocalization.infrastructure.insight.InsightGenerator;
 import pl.polsl.olapvocalization.infrastructure.validator.QueryValidationResult;
 import pl.polsl.olapvocalization.infrastructure.validator.QueryValidator;
 import pl.polsl.olapvocalization.infrastructure.vocalization.InsightVocalizator;
-import pl.polsl.olapvocalization.olap.query.Query;
-import pl.polsl.olapvocalization.olap.query.QueryBuilder;
-import pl.polsl.olapvocalization.olap.query.QueryRefinement;
-import pl.polsl.olapvocalization.olap.query.QueryResult;
+import pl.polsl.olapvocalization.infrastructure.database.query.Query;
+import pl.polsl.olapvocalization.infrastructure.database.query.QueryBuilder;
+import pl.polsl.olapvocalization.infrastructure.database.query.QueryResult;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +39,7 @@ public class VOOLProcessor {
             final QueryValidationResult queryValidationResult = queryValidator.validateQuery(userSession.getCurrentQuery(), query);
 
             if (queryValidationResult.getSuccess()) {
+                userSession.updateSession(query);
                 final QueryResult queryResult = queryExecutor.executeQuery(userSession.getCurrentQuery());
                 userSession.updateResult(queryResult);
                 final List<Insight> insights = insightGenerator.generateInsights(userSession.getPreviousResult(), userSession.getCurrentResult());
@@ -48,7 +49,6 @@ public class VOOLProcessor {
                 log.error("Query validation error");
             }
         }
+
     }
-
-
 }

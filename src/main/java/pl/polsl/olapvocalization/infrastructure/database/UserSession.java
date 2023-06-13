@@ -1,10 +1,10 @@
-package pl.polsl.olapvocalization.infrastructure;
+package pl.polsl.olapvocalization.infrastructure.database;
 
 import lombok.Getter;
-import pl.polsl.olapvocalization.olap.query.InitialQuery;
-import pl.polsl.olapvocalization.olap.query.Query;
-import pl.polsl.olapvocalization.olap.query.QueryRefinement;
-import pl.polsl.olapvocalization.olap.query.QueryResult;
+import pl.polsl.olapvocalization.infrastructure.database.query.InitialQuery;
+import pl.polsl.olapvocalization.infrastructure.database.query.Query;
+import pl.polsl.olapvocalization.infrastructure.database.query.QueryRefinement;
+import pl.polsl.olapvocalization.infrastructure.database.query.QueryResult;
 
 import java.util.ArrayList;
 import java.util.List;

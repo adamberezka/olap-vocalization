@@ -106,7 +106,6 @@ public class OracleOlapTest {
         final MdmRootSchema rootSchema = (MdmRootSchema) mdmMetadataProvider.getRootSchema();
         final MdmDatabaseSchema mdmDBSchema = rootSchema.getDatabaseSchema(DATABASE_SCHEMA_NAME);
 
-        // Get the primary dimensions and the measure.
         final List<MdmPrimaryDimension> dimensions = Arrays.asList(
                 (MdmPrimaryDimension) mdmDBSchema.getDimensions().stream().filter(dimension -> ((MdmPrimaryDimension) dimension).getName().equals("PRODUCT")).findAny().get(),
                 (MdmPrimaryDimension) mdmDBSchema.getDimensions().stream().filter(dimension -> ((MdmPrimaryDimension) dimension).getName().equals("CUSTOMER")).findAny().get(),
@@ -119,32 +118,21 @@ public class OracleOlapTest {
         Source unitPriceByMonth = units.getSource()
                 .join(dimensions.get(0).getSource())
                 .join(dimensions.get(3).getSource());
-        // Commit the current Transaction (code not shown).
 
-        // Create a Cursor for unitPriceByMonth.
         CursorManager cursorMngr = dp.createCursorManager(unitPriceByMonth);
         CompoundCursor rootCursor = (CompoundCursor) cursorMngr.createCursor();
 
-        // Determine a starting position and the number of rows to display.
         int start = 7;
         int numRows = 12;
 
         log.info("Month     Product     Unit Price");
         log.info("-------   --------   ----------");
 
-        // Iterate through the specified positions of the root CompoundCursor.
-        // Assume that the Cursor contains at least (start + numRows) positions.
         for (int pos = start; pos < start + numRows; pos++) {
-            // Set the position of the root CompoundCursor.
             rootCursor.setPosition(pos);
-            // Print the local values of the output and base ValueCursors.
-            // The getLocalValue method gets the local value from the unique
-            // value of a dimension element.
-            String timeValue = ((ValueCursor) rootCursor.getOutputs().get(0))
-                    .getCurrentString();
+            String timeValue = ((ValueCursor) rootCursor.getOutputs().get(0)).getCurrentString();
             String timeLocVal = timeValue;
-            String prodValue = ((ValueCursor) rootCursor.getOutputs().get(1))
-                    .getCurrentString();
+            String prodValue = ((ValueCursor) rootCursor.getOutputs().get(1)).getCurrentString();
             String prodLocVal = prodValue;
             Object price = rootCursor.getValueCursor().getCurrentValue();
             log.info(timeLocVal + "   " + prodLocVal + "   " + price);

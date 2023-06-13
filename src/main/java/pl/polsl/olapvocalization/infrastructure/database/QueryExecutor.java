@@ -1,9 +1,7 @@
 package pl.polsl.olapvocalization.infrastructure.database;
 
-import pl.polsl.olapvocalization.olap.query.Query;
-import pl.polsl.olapvocalization.olap.query.QueryResult;
-
-import java.util.List;
+import pl.polsl.olapvocalization.infrastructure.database.query.Query;
+import pl.polsl.olapvocalization.infrastructure.database.query.QueryResult;
 
 public interface QueryExecutor {
 

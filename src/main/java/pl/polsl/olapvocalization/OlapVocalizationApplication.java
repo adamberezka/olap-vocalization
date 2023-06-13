@@ -14,8 +14,6 @@ public class OlapVocalizationApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(OlapVocalizationApplication.class, args);
-
-        
     }
 
     @Override

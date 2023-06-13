@@ -1,4 +1,4 @@
-package pl.polsl.olapvocalization.olap.metadata;
+package pl.polsl.olapvocalization.infrastructure.database.metadata;
 
 import lombok.Value;
 
