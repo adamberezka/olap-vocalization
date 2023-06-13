@@ -1,4 +1,4 @@
-package pl.polsl.olapvocalization.olap.query;
+package pl.polsl.olapvocalization.infrastructure.database.query;
 
 public class QueryRefinement implements Query {
 

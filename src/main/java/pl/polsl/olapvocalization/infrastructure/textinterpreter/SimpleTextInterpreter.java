@@ -1,6 +1,6 @@
 package pl.polsl.olapvocalization.infrastructure.textinterpreter;
 
-import pl.polsl.olapvocalization.infrastructure.MetadataRepository;
+import pl.polsl.olapvocalization.infrastructure.database.metadata.MetadataRepository;
 
 import java.util.List;
 

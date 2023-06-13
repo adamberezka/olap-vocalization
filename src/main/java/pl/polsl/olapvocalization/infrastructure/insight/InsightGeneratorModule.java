@@ -1,6 +1,6 @@
 package pl.polsl.olapvocalization.infrastructure.insight;
 
-import pl.polsl.olapvocalization.olap.query.QueryResult;
+import pl.polsl.olapvocalization.infrastructure.database.query.QueryResult;
 
 public interface InsightGeneratorModule {
 

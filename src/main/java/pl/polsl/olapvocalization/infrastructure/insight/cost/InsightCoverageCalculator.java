@@ -1,7 +1,7 @@
 package pl.polsl.olapvocalization.infrastructure.insight.cost;
 
 import org.springframework.stereotype.Component;
-import pl.polsl.olapvocalization.olap.query.QueryResult;
+import pl.polsl.olapvocalization.infrastructure.database.query.QueryResult;
 
 @Component
 public class InsightCoverageCalculator {
