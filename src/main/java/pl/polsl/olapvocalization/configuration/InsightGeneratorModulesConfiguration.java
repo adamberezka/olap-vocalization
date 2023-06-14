@@ -1,6 +1,6 @@
 package pl.polsl.olapvocalization.configuration;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class InsightGeneratorModulesConfiguration {
 
-    OlapVocalizationApplicationConfigurationProperties properties;
+    private final OlapVocalizationApplicationConfigurationProperties properties;
 
     @Bean
     public List<InsightGeneratorModule> insightGeneratorModules(final InsightCoverageCalculator insightCoverageCalculator,

@@ -7,8 +7,8 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Configuration
 @ConfigurationProperties(prefix = "olap.vocalization")
@@ -17,19 +17,19 @@ import java.util.List;
 public class OlapVocalizationApplicationConfigurationProperties {
 
     @NotNull
-    InputManagerType inputManager;
+    private InputManagerType inputManager;
     @NotNull
-    TextInterpreterType textInterpreter;
+    private TextInterpreterType textInterpreter;
     @NotNull
-    QueryValidatorType queryValidator;
+    private QueryValidatorType queryValidator;
     @NotNull
-    QueryExecutorType queryExecutor;
+    private QueryExecutorType queryExecutor;
     @NotNull
-    InsightVocalizatorType insightVocalizator;
+    private InsightVocalizatorType insightVocalizator;
     @NotNull
-    InsightVocalizationCostCalculatorType insightVocalizationCostCalculator;
+    private InsightVocalizationCostCalculatorType insightVocalizationCostCalculator;
     @NotEmpty
-    List<InsightGeneratorModuleType> insightGeneratorModules = new ArrayList<>();
+    private Set<InsightGeneratorModuleType> insightGeneratorModules = new HashSet<>();
 
     enum InputManagerType {
         CONSOLE

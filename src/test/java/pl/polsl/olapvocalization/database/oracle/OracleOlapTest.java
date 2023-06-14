@@ -81,14 +81,22 @@ public class OracleOlapTest {
                 final List hierarchies = ((MdmDimension) dimension).getPrimaryDimension().getHierarchies();
                 hierarchies.forEach(hierarchy -> {
                     log.info(" ------------ " + ((MdmLevelHierarchy) hierarchy).getName());
+                    final List<MdmAttribute> hierarchyAttributes = ((MdmLevelHierarchy) hierarchy).getAttributes();
+                    log.info(" --------------- Attributes: ");
+                    hierarchyAttributes.forEach(attribute -> log.info(" ------------------ " + attribute.getName()));
                     final List<MdmHierarchyLevel> hierarchyLevels = ((MdmLevelHierarchy) hierarchy).getHierarchyLevels();
                     log.info(" --------------- Levels: ");
-                    hierarchyLevels.forEach(level -> log.info(" ------------------ " + level.getName()));
+                    hierarchyLevels.forEach(level ->  {
+                        log.info(" ------------------ " + level.getName());
+                        log.info(" --------------------- Depth: " + level.getLevelDepth());
+                        log.info(" --------------------- Attributes: ");
+                        final List<MdmAttribute> hierarchyLevelAttributes = level.getAttributes();
+                        hierarchyLevelAttributes.forEach(attribute -> log.info(" ------------------------ " + attribute.getName()));
+                    });
                 });
                 final List attributes = ((MdmDimension) dimension).getAttributes();
                 log.info(" --------- Attributes: ");
                 attributes.forEach(attribute -> log.info(" ------------ " + ((MdmAttribute) attribute).getName()));
-
             });
             log.info(" --- Measures: ");
             cube.getMeasures().forEach(measure -> log.info(" ------ " + measure.getName()));
