@@ -46,18 +46,29 @@ public class QueryBuilder {
             // build measure clause
             MeasureClause mc = new MeasureClause();
 
-            while (!targetSequence.empty() && targetSequence.peek() != textInterpreter.getMeasureClauseTerminatorToken()) {
+            Boolean skipSelection = false;
+
+            while (!targetSequence.empty() && (targetSequence.peek() != textInterpreter.getMeasureClauseTerminatorToken() && targetSequence.peek() != textInterpreter.getSelectionClauseTerminatorToken())) {
                 String value1 = targetSequence.pop();
-                String value2 = targetSequence.pop();
+                String value2 = "";
+
+                if (targetSequence.peek() != textInterpreter.getMeasureClauseTerminatorToken() && targetSequence.peek() != textInterpreter.getSelectionClauseTerminatorToken()){
+                    value2 = targetSequence.pop();
+                }
+
                 mc.addMeasureClausePair(value1, value2);
             }
             initialQuery.setMeasureClause(mc);
-            targetSequence.pop();
+            String afterMeasureToken = targetSequence.pop();
+
+            if (afterMeasureToken == textInterpreter.getSelectionClauseTerminatorToken()) {
+                skipSelection = true;
+            }
 
             // build selection clause
             SelectionClause sc = new SelectionClause();
 
-            while (!targetSequence.empty() && targetSequence.peek() != textInterpreter.getSelectionClauseTerminatorToken()) {
+            while (!skipSelection && !targetSequence.empty() && targetSequence.peek() != textInterpreter.getSelectionClauseTerminatorToken()) {
                 SCN scn = new SCN();
 
                 if (targetSequence.peek() == textInterpreter.getNegationToken()) {
@@ -74,7 +85,10 @@ public class QueryBuilder {
                 sc.addSCN(scn);
             }
             initialQuery.setSelectionClause(sc);
-            targetSequence.pop();
+
+            if (!skipSelection) {
+                targetSequence.pop();
+            }
 
             // build group by clause
             GroupByClause gc = new GroupByClause();

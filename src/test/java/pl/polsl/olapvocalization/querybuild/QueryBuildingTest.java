@@ -85,6 +85,50 @@ public class QueryBuildingTest {
     }
 
     @Test
+    public void simpleInitialQueryBuildingTest(){
+        TextInterpreter interpreter = new SimpleTextInterpreter();
+        String text = "avg unitSales groupby region";
+        InitialQuery initialQuery = new InitialQuery();
+
+        MeasureClause measureClause = new MeasureClause();
+        GroupByClause groupByClause = new GroupByClause();
+
+        measureClause.addMeasureClausePair("avg", "unitSales");
+
+        groupByClause.addGroupByAttribute("region");
+
+        initialQuery.setMeasureClause(measureClause);
+        initialQuery.setGroupByClause(groupByClause);
+
+        InitialQuery actualQuery = (InitialQuery) (new QueryBuilder(interpreter).getQuery(text));
+
+        Assertions.assertEquals(measureClause.getValues(), actualQuery.getMeasureClause().getValues());
+        Assertions.assertEquals(groupByClause.getAttributes(), actualQuery.getGroupByClause().getAttributes());
+    }
+
+    @Test
+    public void verySimpleInitialQueryBuildingTest(){
+        TextInterpreter interpreter = new SimpleTextInterpreter();
+        String text = "unitSales groupby region";
+        InitialQuery initialQuery = new InitialQuery();
+
+        MeasureClause measureClause = new MeasureClause();
+        GroupByClause groupByClause = new GroupByClause();
+
+        measureClause.addMeasureClausePair("unitSales", "");
+
+        groupByClause.addGroupByAttribute("region");
+
+        initialQuery.setMeasureClause(measureClause);
+        initialQuery.setGroupByClause(groupByClause);
+
+        InitialQuery actualQuery = (InitialQuery) (new QueryBuilder(interpreter).getQuery(text));
+
+        Assertions.assertEquals(measureClause.getValues(), actualQuery.getMeasureClause().getValues());
+        Assertions.assertEquals(groupByClause.getAttributes(), actualQuery.getGroupByClause().getAttributes());
+    }
+
+    @Test
     public void complexInitialQueryBuildingTest(){
         TextInterpreter interpreter = new SimpleTextInterpreter();
         String text = "avg unitSales where year = 2019 product = milk groupby region";
