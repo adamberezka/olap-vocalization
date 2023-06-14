@@ -1,4 +1,4 @@
-package pl.polsl.olapvocalization.infrastructure.database;
+package pl.polsl.olapvocalization.infrastructure.database.query;
 
 import pl.polsl.olapvocalization.infrastructure.database.query.Query;
 import pl.polsl.olapvocalization.infrastructure.database.query.QueryResult;

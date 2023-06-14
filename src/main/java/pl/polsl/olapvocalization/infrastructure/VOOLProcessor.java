@@ -2,7 +2,7 @@ package pl.polsl.olapvocalization.infrastructure;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import pl.polsl.olapvocalization.infrastructure.database.QueryExecutor;
+import pl.polsl.olapvocalization.infrastructure.database.query.QueryExecutor;
 import pl.polsl.olapvocalization.infrastructure.database.UserSession;
 import pl.polsl.olapvocalization.infrastructure.input.InputManager;
 import pl.polsl.olapvocalization.infrastructure.insight.Insight;

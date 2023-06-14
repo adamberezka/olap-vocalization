@@ -5,7 +5,7 @@ import oracle.jdbc.OracleConnection;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.polsl.olapvocalization.infrastructure.database.QueryExecutor;
+import pl.polsl.olapvocalization.infrastructure.database.query.QueryExecutor;
 import pl.polsl.olapvocalization.infrastructure.database.metadata.MetadataRepository;
 import pl.polsl.olapvocalization.infrastructure.database.oracle.OracleDatasourceUtils;
 import pl.polsl.olapvocalization.infrastructure.database.oracle.OracleMetadataRepository;

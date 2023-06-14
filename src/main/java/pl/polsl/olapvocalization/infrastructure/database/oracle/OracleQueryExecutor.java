@@ -1,6 +1,6 @@
 package pl.polsl.olapvocalization.infrastructure.database.oracle;
 
-import pl.polsl.olapvocalization.infrastructure.database.QueryExecutor;
+import pl.polsl.olapvocalization.infrastructure.database.query.QueryExecutor;
 import pl.polsl.olapvocalization.infrastructure.database.query.Query;
 import pl.polsl.olapvocalization.infrastructure.database.query.QueryResult;
 
