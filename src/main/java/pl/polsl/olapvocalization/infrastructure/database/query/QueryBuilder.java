@@ -8,6 +8,8 @@ import pl.polsl.olapvocalization.olap.query.queryclauses.SCN;
 import pl.polsl.olapvocalization.olap.query.queryclauses.SelectionClause;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 @RequiredArgsConstructor
@@ -15,9 +17,20 @@ public class QueryBuilder {
 
     private final TextInterpreter textInterpreter;
 
+    private Stack reverseStack(Stack inputStack){
+        Queue queue = new LinkedList<>();
+        while (!inputStack.isEmpty()) {
+            queue.add(inputStack.pop());
+        }
+        while (!queue.isEmpty()) {
+            inputStack.add(queue.remove());
+        }
+        return inputStack;
+    }
+
     public Query getQuery(final String queryInput) {
 
-        Stack<String> targetSequence = textInterpreter.getInterpretedText(queryInput);
+        Stack<String> targetSequence = reverseStack(textInterpreter.getInterpretedText(queryInput));
 
         if (textInterpreter.isRefinementDeterminer(targetSequence.peek())) {
             QueryRefinement queryRefinement = new QueryRefinement();
@@ -33,11 +46,10 @@ public class QueryBuilder {
             // build measure clause
             MeasureClause mc = new MeasureClause();
 
-            while (targetSequence.peek() != textInterpreter.getMeasureClauseTerminatorToken()) {
+            while (!targetSequence.empty() && targetSequence.peek() != textInterpreter.getMeasureClauseTerminatorToken()) {
                 String value1 = targetSequence.pop();
                 String value2 = targetSequence.pop();
                 mc.addMeasureClausePair(value1, value2);
-                mc.addMeasureClausePair(targetSequence.pop(), targetSequence.pop());
             }
             initialQuery.setMeasureClause(mc);
             targetSequence.pop();
@@ -45,7 +57,7 @@ public class QueryBuilder {
             // build selection clause
             SelectionClause sc = new SelectionClause();
 
-            while (targetSequence.peek() != textInterpreter.getSelectionClauseTerminatorToken()) {
+            while (!targetSequence.empty() && targetSequence.peek() != textInterpreter.getSelectionClauseTerminatorToken()) {
                 SCN scn = new SCN();
 
                 if (targetSequence.peek() == textInterpreter.getNegationToken()) {
@@ -71,6 +83,8 @@ public class QueryBuilder {
                 String attribute = targetSequence.pop();
                 gc.addGroupByAttribute(attribute);
             }
+
+            initialQuery.setGroupByClause(gc);
 
             return initialQuery;
         }

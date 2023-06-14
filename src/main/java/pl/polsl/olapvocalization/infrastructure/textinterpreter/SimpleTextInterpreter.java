@@ -6,6 +6,7 @@ import pl.polsl.olapvocalization.infrastructure.database.query.QueryRefinement;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 import java.util.stream.Stream;
 
@@ -25,12 +26,37 @@ public class SimpleTextInterpreter implements TextInterpreter {
         NEGATION
     }
 
+    private Optional<String> getCustomToken(String token){
+        Stream<String> customTokens = Arrays.asList(
+                CustomTokens.WHERE.toString(),
+                CustomTokens.GROUP_BY.toString(),
+                CustomTokens.DRILL.toString(),
+                CustomTokens.ROLLUP.toString(),
+                CustomTokens.SLICE.toString(),
+                CustomTokens.ADD.toString(),
+                CustomTokens.DROP.toString(),
+                CustomTokens.REPLACE.toString(),
+                CustomTokens.NEGATION.toString()
+        ).stream();
+
+        Optional<String> customToken = customTokens.filter(ct -> ct.toLowerCase().replace("_", "").equals(token.toLowerCase())).findFirst();
+
+        return customToken;
+    }
+
     @Override
     public Stack<String> getInterpretedText(String input) {
         Stack<String> resultStack = new Stack<>();
 
         for (String token : input.split(" ")) {
-            resultStack.add(token);
+            Optional<String> customToken = getCustomToken(token);
+
+            if (customToken.isPresent()) {
+                resultStack.add(customToken.get());
+            } else {
+                resultStack.add(token);
+            }
+
         }
 
         return resultStack;
