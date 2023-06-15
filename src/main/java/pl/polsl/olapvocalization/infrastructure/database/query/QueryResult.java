@@ -9,11 +9,12 @@ import java.util.List;
 public class QueryResult {
 
     List<OLAPRecord> records;
+    List<ColumnDefinition> columns;
 
     @Data
-    class ColumnDefinition {
+    class ColumnDefinition<T> {
         String name;
-        ColumnType type;
+        Class<T> type;
     }
 
     class ColumnType {
